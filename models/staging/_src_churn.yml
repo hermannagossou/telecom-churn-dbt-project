@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: churn
+    database: learning-de-492515
+    schema: churn_dataset
+    tables:
+      - name: demographics
+      - name: locations
+      - name: populations
+      - name: services
+      - name: status
