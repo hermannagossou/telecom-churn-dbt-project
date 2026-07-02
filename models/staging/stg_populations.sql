@@ -6,7 +6,7 @@ with source as (
 
 renamed as (
 
-    select
+    select distinct
         `zip code` as code_postal,
         safe_cast(
             regexp_replace(
