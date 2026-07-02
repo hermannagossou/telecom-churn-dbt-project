@@ -6,9 +6,13 @@ with source as (
 
 renamed as (
 
-    select
+    select distinct
         trim(`customer id`) as id,
-        trim(gender) as genre,
+        case
+            when trim(gender) = 'Male' then 'Masculin'
+            when trim(gender) = 'Female' then 'Féminin'
+            else 'Autre'
+        end as genre,
         age,
         `senior citizen` as personne_agee,
         married as personne_mariee,
