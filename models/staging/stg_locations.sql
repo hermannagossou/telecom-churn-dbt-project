@@ -6,9 +6,9 @@ with source as (
 
 renamed as (
 
-    select
+    select distinct
         trim(`location id`) as id,
-        trim(`customer id`) as customer_id,
+        trim(`customer id`) as id_client,
         trim(city) as ville,
         trim(state) as etat,
         trim(country) as pays,
