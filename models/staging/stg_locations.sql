@@ -12,7 +12,9 @@ renamed as (
         trim(city) as ville,
         trim(state) as etat,
         trim(country) as pays,
-        `zip code` as code_postal
+        `zip code` as code_postal,
+        latitude/1000000 as latitude,
+        longitude/1000000 as longitude
     from source
 )
 
