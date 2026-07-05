@@ -115,9 +115,27 @@ Cliquer sur le logo dbt dans la barre latérale pour ouvrir le panneau **Get sta
 
 ## 📊 Modèles principaux
 
-> 🚧 *Cette section sera mise à jour au fil de l'avancement du projet.*
+### Staging — Modèles
+
+| Modèle | Source | Description |
+|---|---|---|
+| `stg_demographics` | `demographics` | Profil client nettoyé — genre, âge, situation familiale |
+| `stg_locations` | `locations` | Localisation nettoyée — ville, état, pays, code postal |
+| `stg_populations` | `populations` | Population par code postal |
+| `stg_services` | `services` | Services souscrits et facturation, nettoyés |
+| `stg_status` | `status` | Statut client et motif de résiliation, nettoyés |
+
+### Intermediate — Modèles
+
+| Modèle | Assemble | Description |
+|---|---|---|
+| `int_localisations_joined` | `stg_locations` + `stg_populations` | Localisation enrichie de la population de son code postal |
+| `int_clients_joined` | `stg_demographics` + `stg_services` | Profil client enrichi d'une première logique métier (niveau de maturité) |
+| `int_churn_joined` | `stg_services` + `int_localisations_joined` + `stg_status` | Point de convergence — fabrique les clés de substitution qui alimenteront `fact_churn` |
 
 ### Mart — Schéma en étoile
+
+> 🚧 *Schéma cible, en cours de construction.*
 
 | Modèle | Type | Clé primaire | Description |
 |---|---|---|---|
@@ -159,11 +177,11 @@ Tests couverts :
 | Phase | Statut |
 |---|---|
 | Setup du projet dbt | ✅ Fait |
-| Modélisation Staging | 🚧 En cours |
-| Modélisation Intermediate | ⏳ À venir |
-| Modélisation Marts | ⏳ À venir |
+| Construction Staging | ✅ Fait |
+| Construction Intermediate | ✅ Fait |
+| Construction Marts | ⏳ À venir |
 | Tests & Documentation | ⏳ À venir |
-| Connexion Power BI | ⏳ À venir |
+| Visualisation sur Power BI | ⏳ À venir |
 
 ---
 
@@ -183,4 +201,4 @@ GCP Associate Cloud Engineer · Python · SQL · dbt · BigQuery
 
 ---
 
-*Dernière mise à jour : juin 2026*
+*Dernière mise à jour : juillet 2026*
