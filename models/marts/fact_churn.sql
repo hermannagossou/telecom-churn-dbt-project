@@ -3,7 +3,6 @@ with int_churn_joined as (
 )
 
 select
-    id,
     id_client,
     id_localisation,
     id_service,

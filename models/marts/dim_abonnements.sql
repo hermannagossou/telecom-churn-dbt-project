@@ -1,5 +1,5 @@
-with stg_services as (
-    select * from {{ ref('stg_services') }}
+with int_clients_joined as (
+    select * from {{ ref('int_clients_joined') }}
 )
 
 select distinct
@@ -7,4 +7,4 @@ select distinct
     periodicite,
     facturation_digitale,
     mode_paiement
-from stg_services
+from int_clients_joined

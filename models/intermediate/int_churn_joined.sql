@@ -7,7 +7,7 @@ int_localisations_joined as (
 )
 
 select 
-    c.id,
+    c.id as id_client,
     {{ dbt_utils.generate_surrogate_key(['l.ville', 'l.etat', 'l.pays', 'l.code_postal', 'l.population']) }} as id_localisation,
     {{ dbt_utils.generate_surrogate_key(
         [
