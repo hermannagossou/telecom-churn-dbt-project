@@ -1,9 +1,9 @@
-with stg_status as (
-    select * from {{ ref('stg_status') }}
+with int_clients_joined as (
+    select * from {{ ref('int_clients_joined') }}
 )
 
 select distinct
     {{ dbt_utils.generate_surrogate_key(['categorie_churn', 'raison_churn']) }} as id,
     categorie_churn,
     raison_churn
-from stg_status
+from int_clients_joined
