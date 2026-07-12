@@ -1,46 +1,39 @@
-with stg_services as (
-    select * from {{ ref('stg_services') }}
+with int_clients_joined as (
+    select * from {{ ref('int_clients_joined') }}
 ),
 
-int_localisations_joined as(
+int_localisations_joined as (
     select * from {{ ref('int_localisations_joined') }}
-),
-
-stg_status as (
-    select * from {{ ref('stg_status') }}
 )
 
 select 
-    {{ dbt_utils.generate_surrogate_key(['s.id_client', 's.id']) }} as id,
-    s.id_client,
+    c.id,
     {{ dbt_utils.generate_surrogate_key(['l.ville', 'l.etat', 'l.pays', 'l.code_postal', 'l.population']) }} as id_localisation,
     {{ dbt_utils.generate_surrogate_key(
         [
-            's.service_telephonique',
-            's.lignes_multiples',
-            's.service_internet',
-            's.type_internet',
-            's.securite_en_ligne',
-            's.sauvegarde_en_ligne',
-            's.plan_protection_equipement',
-            's.support_technique_premium',
-            's.streaming_tv',
-            's.streaming_films',
-            's.streaming_musique',
-            's.donnees_illimitee'
+            'c.service_telephonique',
+            'c.lignes_multiples',
+            'c.service_internet',
+            'c.type_internet',
+            'c.securite_en_ligne',
+            'c.sauvegarde_en_ligne',
+            'c.plan_protection_equipement',
+            'c.support_technique_premium',
+            'c.streaming_tv',
+            'c.streaming_films',
+            'c.streaming_musique',
+            'c.donnees_illimitee'
         ]
     ) }} as id_service,
-    {{ dbt_utils.generate_surrogate_key(['s.periodicite', 's.facturation_digitale', 's.mode_paiement']) }} as id_abonnement,
-    {{ dbt_utils.generate_surrogate_key(['st.categorie_churn', 'st.raison_churn']) }} as id_motif,
-    s.montant_charge_mensuel,
-    s.montant_charge_total,
-    s.montant_remboursements_total,
-    s.montant_charge_donnees_supplementaire,
-    s.nombre_moyen_gb_telecharge_par_mois,
-    st.score_satisfaction,
-    st.statut_client
-from stg_services s
+    {{ dbt_utils.generate_surrogate_key(['c.periodicite', 'c.facturation_digitale', 'c.mode_paiement']) }} as id_abonnement,
+    {{ dbt_utils.generate_surrogate_key(['c.categorie_churn', 'c.raison_churn']) }} as id_motif,
+    c.montant_charge_mensuel,
+    c.montant_charge_total,
+    c.montant_remboursements_total,
+    c.montant_charge_donnees_supplementaire,
+    c.nombre_moyen_gb_telecharge_par_mois,
+    c.score_satisfaction,
+    c.statut_client
+from int_clients_joined c
 left join int_localisations_joined l
-    on s.id_client = l.id_client
-left join stg_status st
-    on s.id_client = st.id_client
+    on c.id = l.id_client
