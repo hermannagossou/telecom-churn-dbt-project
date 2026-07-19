@@ -6,7 +6,72 @@ sources:
     schema: churn_dataset
     tables:
       - name: demographics
+        description: ""
+        columns:
+          - name: "`customer id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
       - name: locations
+        description: ""
+        columns:
+          - name: "`location id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
+          - name: "`customer id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
       - name: populations
+        description: ""
+        columns:
+          - name: "`zip code`"
+            data_type: int64
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
       - name: services
+        description: ""
+        columns:
+          - name: "`service id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
+          - name: "`customer id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
       - name: status
+        description: ""
+        columns:
+          - name: "`status id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
+
+          - name: "`customer id`"
+            data_type: string
+            data_tests:
+              - unique
+              - not_null
+            description: ""
