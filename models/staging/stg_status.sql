@@ -23,7 +23,7 @@ renamed as (
             when trim(`churn category`) = "Price" then "Prix"
             else "Non Renseigné"
         end as categorie_churn,
-        trim(`churn reason`) as raison_churn
+        coalesce(trim(`churn reason`), "Don't know") as raison_churn
 
     from source
 

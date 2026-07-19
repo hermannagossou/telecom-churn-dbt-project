@@ -4,3 +4,5 @@ logs/
 target/
 .env
 credentials.json
+learning-de-492515-79c5d3561349.json
+*.json.key

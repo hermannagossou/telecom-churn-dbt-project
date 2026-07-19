@@ -1,0 +1,376 @@
+version: 2
+
+models:
+  - name: stg_demographics
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        data_tests:
+          - unique
+          - not_null
+        description: ""
+
+      - name: genre
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Masculin', 'Féminin']
+        description: ""
+
+      - name: age
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: personne_agee
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: false
+        description: ""
+
+      - name: personne_mariee
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: false
+        description: ""
+
+      - name: personne_a_charge
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: false
+        description: ""
+
+      - name: nombre_personne_a_charge
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+  - name: stg_locations
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+        description: ""
+
+      - name: id_client
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: ville
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: etat
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: pays
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: code_postal
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: latitude
+        data_type: float64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: longitude
+        data_type: float64
+        data_tests:
+          - not_null
+        description: ""
+
+  - name: stg_populations
+    description: ""
+    columns:
+      - name: code_postal
+        data_type: int64
+        data_tests:
+          - not_null
+          - unique
+        description: ""
+
+      - name: population
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+  - name: stg_services
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        data_tests:
+          - unique
+          - not_null
+        description: ""
+
+      - name: id_client
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: anciennete
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: service_telephonique
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: lignes_multiples
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: service_internet
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: type_internet
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['DSL', 'Câble', 'Fibre Optique', 'Non Renseigné']
+        description: ""
+
+      - name: securite_en_ligne
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: sauvegarde_en_ligne
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: plan_protection_equipement
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: support_technique_premium
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: streaming_tv
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: streaming_films
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: streaming_musique
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: donnees_illimitee
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: periodicite
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Mensuel', 'Annuel', 'Biennal']
+        description: ""
+
+      - name: facturation_digitale
+        data_type: boolean
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [True, False]
+                quote: False
+        description: ""
+
+      - name: mode_paiement
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Carte de crédit', 'Chèque envoyé par courrier', 'Prélèvement bancaire']
+        description: ""
+
+      - name: montant_charge_mensuel
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: montant_charge_total
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: montant_remboursements_total
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: montant_charge_donnees_supplementaire
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: nombre_moyen_gb_telecharge_par_mois
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+  - name: stg_status
+    description: ""
+    columns:
+      - name: id
+        data_type: string
+        data_tests:
+          - unique
+          - not_null
+        description: ""
+
+      - name: id_client
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: score_satisfaction
+        data_type: int64
+        data_tests:
+          - not_null
+        description: ""
+
+      - name: statut_client
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Rejoint', 'Resté', 'Résilié']
+        description: ""
+
+      - name: categorie_churn
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Attitude', 'Concurrent', 'Insatisfaction', 'Prix', 'Non Renseigné']
+        description: ""
+
+      - name: raison_churn
+        data_type: string
+        data_tests:
+          - not_null
+        description: ""
