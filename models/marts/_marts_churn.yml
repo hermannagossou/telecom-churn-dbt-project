@@ -2,249 +2,268 @@ version: 2
 
 models:
   - name: dim_abonnements
-    description: ""
+    description: >
+      Dimension — combinaisons distinctes de type d'abonnement (périodicité,
+      facturation digitale, mode de paiement), issues de `int_clients_joined`.
+      Matérialisé en table.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Clé de substitution de l'abonnement (clé primaire), générée à partir de périodicité/facturation/mode de paiement.
 
       - name: periodicite
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('periodicite') }}"
 
       - name: facturation_digitale
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('facturation_digitale') }}"
 
       - name: mode_paiement
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('mode_paiement') }}"
 
   - name: dim_clients
-    description: ""
+    description: >
+      Dimension — profil des clients (données démographiques et ancienneté),
+      issu de `int_clients_joined`. Un enregistrement par client.
+      Matérialisé en table.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: "{{ doc('id_client') }} Clé primaire de cette dimension."
 
       - name: genre
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('genre') }}"
 
       - name: age
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('age') }}"
 
       - name: anciennete
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('anciennete') }}"
 
       - name: niveau_maturite
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('niveau_maturite') }}"
 
       - name: personne_agee
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('personne_agee') }}"
 
       - name: personne_mariee
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('personne_mariee') }}"
 
       - name: personne_a_charge
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('personne_a_charge') }}"
 
       - name: nombre_personne_a_charge
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('nombre_personne_a_charge') }}"
 
   - name: dim_localisations
-    description: ""
+    description: >
+      Dimension — localisations distinctes des clients, enrichies de la
+      population de leur code postal, issue de `int_localisations_joined`.
+      Matérialisé en table.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Clé de substitution de la localisation (clé primaire).
 
       - name: ville
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('ville') }}"
 
       - name: etat
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('etat') }}"
 
       - name: pays
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('pays') }}"
 
       - name: code_postal
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('code_postal') }}"
 
       - name: latitude
         data_type: float64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('latitude') }}"
 
       - name: longitude
         data_type: float64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('longitude') }}"
 
       - name: population
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('population') }}"
 
   - name: dim_motifs
-    description: ""
+    description: >
+      Dimension — motifs de résiliation distincts (catégorie et raison de
+      churn), issue de `int_clients_joined`. Matérialisé en table.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Clé de substitution du motif (clé primaire), générée à partir de catégorie/raison de churn.
 
       - name: categorie_churn
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('categorie_churn') }}"
 
       - name: raison_churn
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('raison_churn') }}"
 
   - name: dim_services
-    description: ""
+    description: >
+      Dimension — bouquets de services souscrits distincts (téléphonie,
+      internet, streaming, options de sécurité), issue de
+      `int_clients_joined`. Matérialisé en table.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Clé de substitution du bouquet de services (clé primaire).
 
       - name: service_telephonique
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('service_telephonique') }}"
 
       - name: lignes_multiples
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('lignes_multiples') }}"
 
       - name: service_internet
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('service_internet') }}"
 
       - name: type_internet
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('type_internet') }}"
 
       - name: securite_en_ligne
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('securite_en_ligne') }}"
 
       - name: sauvegarde_en_ligne
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('sauvegarde_en_ligne') }}"
 
       - name: plan_protection_equipement
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('plan_protection_equipement') }}"
 
       - name: support_technique_premium
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('support_technique_premium') }}"
 
       - name: streaming_tv
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_tv') }}"
 
       - name: streaming_films
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_films') }}"
 
       - name: streaming_musique
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_musique') }}"
 
       - name: donnees_illimitee
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('donnees_illimitee') }}"
 
   - name: fact_churn
-    description: ""
+    description: >
+      Table de faits du schéma en étoile — un enregistrement par client,
+      portant les mesures de facturation, d'usage et de satisfaction ainsi
+      que les clés étrangères vers les cinq dimensions (`dim_clients`,
+      `dim_localisations`, `dim_services`, `dim_abonnements`, `dim_motifs`).
+      Issue de `int_churn_joined`. Matérialisé en table.
     columns:
       - name: id_client
         data_type: string
@@ -255,7 +274,7 @@ models:
               arguments:
                 to: ref('dim_clients')
                 field: id
-        description: ""
+        description: "{{ doc('id_client') }} Clé primaire de cette table de faits, clé étrangère vers `dim_clients`."
 
       - name: id_localisation
         data_type: string
@@ -265,7 +284,7 @@ models:
               arguments:
                 to: ref('dim_localisations')
                 field: id
-        description: ""
+        description: "{{ doc('id_localisation') }} Clé étrangère vers `dim_localisations`."
 
       - name: id_service
         data_type: string
@@ -275,7 +294,7 @@ models:
               arguments:
                 to: ref('dim_services')
                 field: id
-        description: ""
+        description: "{{ doc('id_service') }} Clé étrangère vers `dim_services`."
 
       - name: id_abonnement
         data_type: string
@@ -285,7 +304,7 @@ models:
               arguments:
                 to: ref('dim_abonnements')
                 field: id
-        description: ""
+        description: "{{ doc('id_abonnement') }} Clé étrangère vers `dim_abonnements`."
 
       - name: id_motif
         data_type: string
@@ -295,46 +314,46 @@ models:
               arguments:
                 to: ref('dim_motifs')
                 field: id
-        description: ""
+        description: "{{ doc('id_motif') }} Clé étrangère vers `dim_motifs`."
 
       - name: montant_charge_mensuel
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_mensuel') }}"
 
       - name: montant_charge_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_total') }}"
 
       - name: montant_remboursements_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_remboursements_total') }}"
 
       - name: montant_charge_donnees_supplementaire
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_donnees_supplementaire') }}"
 
       - name: nombre_moyen_gb_telecharge_par_mois
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('nombre_moyen_gb_telecharge_par_mois') }}"
 
       - name: score_satisfaction
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('score_satisfaction') }}"
 
       - name: statut_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('statut_client') }}"

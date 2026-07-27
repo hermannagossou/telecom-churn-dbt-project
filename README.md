@@ -10,7 +10,6 @@ Ce projet vise à construire un pipeline de transformation dbt robuste pour :
 
 - **Identifier** les signaux précurseurs du churn client
 - **Segmenter** la base clients par niveau de risque
-- **Alimenter** des dashboards Power BI pour le suivi des indicateurs de rétention
 
 > Ce projet couvre uniquement la couche **Transform** d'une architecture ELT.
 
@@ -39,7 +38,6 @@ telecom_churn_dbt_project/
 |---|---|
 | Transformation | dbt Fusion Engine |
 | Entrepôt de données | BigQuery (GCP) |
-| Visualisation | Power BI |
 | Versionning | Git / GitHub |
 | Environnement | Ubuntu (principal), Windows (laptop) |
 
@@ -135,13 +133,11 @@ Cliquer sur le logo dbt dans la barre latérale pour ouvrir le panneau **Get sta
 
 ### Mart — Schéma en étoile
 
-> 🚧 *Schéma cible, en cours de construction.*
-
 | Modèle | Type | Clé primaire | Description |
 |---|---|---|---|
-| `fact_churn` | Fact | `id` | Table centrale — charges, remboursements, usage data, satisfaction et statut client |
+| `fact_churn` | Fact | `id_client` | Table centrale — charges, remboursements, usage data, satisfaction et statut client |
 | `dim_clients` | Dimension | `id` | Profil client — genre, âge, ancienneté, situation familiale |
-| `dim_abonnement` | Dimension | `id` | Type d'abonnement — périodicité, facturation digitale, mode de paiement |
+| `dim_abonnements` | Dimension | `id` | Type d'abonnement — périodicité, facturation digitale, mode de paiement |
 | `dim_services` | Dimension | `id` | Services souscrits — téléphonie, internet, streaming, options de sécurité |
 | `dim_localisations` | Dimension | `id` | Localisation — ville, état, pays, code postal, population |
 | `dim_motifs` | Dimension | `id` | Motifs de churn — catégorie et raison de résiliation |
@@ -153,7 +149,7 @@ Cliquer sur le logo dbt dans la barre latérale pour ouvrir le panneau **Get sta
 | `id_client` | `dim_clients` |
 | `id_localisation` | `dim_localisations` |
 | `id_service` | `dim_services` |
-| `id_abonnement` | `dim_abonnement` |
+| `id_abonnement` | `dim_abonnements` |
 | `id_motif` | `dim_motifs` |
 
 ---
@@ -179,9 +175,8 @@ Tests couverts :
 | Setup du projet dbt | ✅ Fait |
 | Construction Staging | ✅ Fait |
 | Construction Intermediate | ✅ Fait |
-| Construction Marts | ⏳ À venir |
-| Tests & Documentation | ⏳ À venir |
-| Visualisation sur Power BI | ⏳ À venir |
+| Construction Marts | ✅ Fait |
+| Tests & Documentation | ✅ Fait |
 
 ---
 
