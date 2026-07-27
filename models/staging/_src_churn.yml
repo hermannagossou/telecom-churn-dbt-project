@@ -4,74 +4,88 @@ sources:
   - name: churn
     database: learning-de-492515
     schema: churn_dataset
+    description: >
+      Données brutes du dataset télécom churn, chargées dans BigQuery
+      (dataset `churn_dataset`). Cinq tables sources, une par thématique
+      client (demographics, locations, populations, services, status)
     tables:
       - name: demographics
-        description: ""
+        description: >
+          Données démographiques brutes des clients : genre, âge, situation
+          familiale et personnes à charge.
         columns:
           - name: "`customer id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant unique du client dans les données sources.
 
       - name: locations
-        description: ""
+        description: >
+          Données brutes de localisation des clients : ville, état, pays,
+          code postal et coordonnées géographiques.
         columns:
           - name: "`location id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant unique de l'enregistrement de localisation.
 
           - name: "`customer id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant du client associé à cette localisation.
 
       - name: populations
-        description: ""
+        description: >
+          Données brutes de population par code postal, utilisées pour
+          enrichir les localisations clients.
         columns:
           - name: "`zip code`"
             data_type: int64
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Code postal (clé naturelle de la table).
 
       - name: services
-        description: ""
+        description: >
+          Données brutes des services souscrits par les clients (téléphonie,
+          internet, streaming, options de sécurité) et de leur facturation.
         columns:
           - name: "`service id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant unique de l'enregistrement de services.
 
           - name: "`customer id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant du client associé à ces services.
 
       - name: status
-        description: ""
+        description: >
+          Données brutes de statut client : score de satisfaction, statut
+          (résilié / resté / rejoint) et motif de résiliation le cas échéant.
         columns:
           - name: "`status id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant unique de l'enregistrement de statut.
 
           - name: "`customer id`"
             data_type: string
             data_tests:
               - unique
               - not_null
-            description: ""
+            description: Identifiant du client associé à ce statut.

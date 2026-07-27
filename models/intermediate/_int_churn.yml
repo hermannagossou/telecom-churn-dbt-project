@@ -2,73 +2,84 @@ version: 2
 
 models:
   - name: int_localisations_joined
-    description: ""
+    description: >
+      Modèle intermédiaire : enrichit les localisations clients
+      (`stg_locations`) avec la population de leur code postal
+      (`stg_populations`) via une jointure sur `code_postal`. Matérialisé en
+      éphémère (injecté directement dans les modèles qui le référencent).
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: >
+          Clé de substitution (surrogate key) générée à partir de
+          ville/état/pays/code postal/population, identifiant une
+          localisation unique.
 
       - name: id_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }}"
 
       - name: ville
         data_type: string
-        description: ""
+        description: "{{ doc('ville') }}"
 
       - name: etat
         data_type: string
-        description: ""
+        description: "{{ doc('etat') }}"
 
       - name: pays
         data_type: string
-        description: ""
+        description: "{{ doc('pays') }}"
 
       - name: code_postal
         data_type: int64
-        description: ""
+        description: "{{ doc('code_postal') }}"
 
       - name: latitude
         data_type: float64
-        description: ""
+        description: "{{ doc('latitude') }}"
 
       - name: longitude
         data_type: float64
-        description: ""
+        description: "{{ doc('longitude') }}"
 
       - name: population
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('population') }}"
 
   - name: int_clients_joined
-    description: ""
+    description: >
+      Modèle intermédiaire : assemble le profil démographique
+      (`stg_demographics`), les services souscrits (`stg_services`) et le
+      statut (`stg_status`) de chaque client, et ajoute une segmentation par
+      niveau de maturité basée sur l'âge. Matérialisé en éphémère.
     columns:
       - name: id
         data_type: string
         data_tests:
           - unique
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }}"
 
       - name: genre
         data_type: string
-        description: ""
+        description: "{{ doc('genre') }}"
 
       - name: age
         data_type: int64
-        description: ""
+        description: "{{ doc('age') }}"
 
       - name: anciennete
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('anciennete') }}"
 
       - name: niveau_maturite
         data_type: string
@@ -77,226 +88,231 @@ models:
           - accepted_values:
               arguments:
                 values: ['Jeune', 'Adulte', 'Senior']
-        description: ""
+        description: "{{ doc('niveau_maturite') }}"
 
       - name: personne_agee
         data_type: boolean
-        description: ""
+        description: "{{ doc('personne_agee') }}"
 
       - name: personne_mariee
         data_type: boolean
-        description: ""
+        description: "{{ doc('personne_mariee') }}"
 
       - name: personne_a_charge
         data_type: boolean
-        description: ""
+        description: "{{ doc('personne_a_charge') }}"
 
       - name: nombre_personne_a_charge
         data_type: int64
-        description: ""
+        description: "{{ doc('nombre_personne_a_charge') }}"
 
       - name: service_telephonique
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('service_telephonique') }}"
 
       - name: lignes_multiples
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('lignes_multiples') }}"
 
       - name: service_internet
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('service_internet') }}"
 
       - name: type_internet
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('type_internet') }}"
 
       - name: securite_en_ligne
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('securite_en_ligne') }}"
 
       - name: sauvegarde_en_ligne
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('sauvegarde_en_ligne') }}"
 
       - name: plan_protection_equipement
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('plan_protection_equipement') }}"
 
       - name: support_technique_premium
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('support_technique_premium') }}"
 
       - name: streaming_tv
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_tv') }}"
 
       - name: streaming_films
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_films') }}"
 
       - name: streaming_musique
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('streaming_musique') }}"
 
       - name: donnees_illimitee
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('donnees_illimitee') }}"
 
       - name: periodicite
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('periodicite') }}"
 
       - name: facturation_digitale
         data_type: boolean
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('facturation_digitale') }}"
 
       - name: mode_paiement
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('mode_paiement') }}"
 
       - name: montant_charge_mensuel
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_mensuel') }}"
 
       - name: montant_charge_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_total') }}"
 
       - name: montant_remboursements_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_remboursements_total') }}"
 
       - name: montant_charge_donnees_supplementaire
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_donnees_supplementaire') }}"
 
       - name: nombre_moyen_gb_telecharge_par_mois
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('nombre_moyen_gb_telecharge_par_mois') }}"
 
       - name: score_satisfaction
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('score_satisfaction') }}"
 
       - name: statut_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('statut_client') }}"
 
       - name: categorie_churn
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('categorie_churn') }}"
 
       - name: raison_churn
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('raison_churn') }}"
 
   - name: int_churn_joined
-    description: ""
+    description: >
+      Modèle intermédiaire pivot : assemble `int_clients_joined` et
+      `int_localisations_joined`, et génère les clés de substitution
+      (surrogate keys) des futures dimensions du mart — localisation,
+      service, abonnement et motif — qui alimenteront `fact_churn`.
+      Matérialisé en éphémère.
     columns:
       - name: id_client
         data_type: string
         data_tests:
           - unique
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }} Clé primaire de ce modèle, future clé étrangère de `fact_churn` vers `dim_clients`."
 
       - name: id_localisation
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_localisation') }} Alimente `dim_localisations`."
 
       - name: id_service
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_service') }} Alimente `dim_services`."
 
       - name: id_abonnement
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_abonnement') }} Alimente `dim_abonnements`."
 
       - name: id_motif
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_motif') }} Alimente `dim_motifs`."
 
       - name: montant_charge_mensuel
         data_type: int64
-        description: ""
+        description: "{{ doc('montant_charge_mensuel') }}"
 
       - name: montant_charge_total
         data_type: int64
-        description: ""
+        description: "{{ doc('montant_charge_total') }}"
 
       - name: montant_remboursements_total
         data_type: int64
-        description: ""
+        description: "{{ doc('montant_remboursements_total') }}"
 
       - name: montant_charge_donnees_supplementaire
         data_type: int64
-        description: ""
+        description: "{{ doc('montant_charge_donnees_supplementaire') }}"
 
       - name: nombre_moyen_gb_telecharge_par_mois
         data_type: int64
-        description: ""
+        description: "{{ doc('nombre_moyen_gb_telecharge_par_mois') }}"
 
       - name: score_satisfaction
         data_type: int64
-        description: ""
+        description: "{{ doc('score_satisfaction') }}"
 
       - name: statut_client
         data_type: string
-        description: ""
+        description: "{{ doc('statut_client') }}"

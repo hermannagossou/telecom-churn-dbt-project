@@ -2,14 +2,18 @@ version: 2
 
 models:
   - name: stg_demographics
-    description: ""
+    description: >
+      Modèle de staging : normalise les données démographiques brutes des
+      clients (`source.demographics`). Applique un `trim` sur les champs
+      texte, traduit les valeurs de genre en français et déduplique via
+      `select distinct`. Matérialisé en vue.
     columns:
       - name: id
         data_type: string
         data_tests:
           - unique
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }} Clé naturelle de ce modèle."
 
       - name: genre
         data_type: string
@@ -17,14 +21,14 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Masculin', 'Féminin']
-        description: ""
+                values: ['Masculin', 'Féminin', 'Autre']
+        description: "{{ doc('genre') }}"
 
       - name: age
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('age') }}"
 
       - name: personne_agee
         data_type: boolean
@@ -34,7 +38,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: false
-        description: ""
+        description: "{{ doc('personne_agee') }}"
 
       - name: personne_mariee
         data_type: boolean
@@ -44,7 +48,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: false
-        description: ""
+        description: "{{ doc('personne_mariee') }}"
 
       - name: personne_a_charge
         data_type: boolean
@@ -54,103 +58,114 @@ models:
               arguments:
                 values: [True, False]
                 quote: false
-        description: ""
+        description: "{{ doc('personne_a_charge') }}"
 
       - name: nombre_personne_a_charge
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('nombre_personne_a_charge') }}"
 
   - name: stg_locations
-    description: ""
+    description: >
+      Modèle de staging : normalise les données brutes de localisation des
+      clients (`source.locations`). Applique un `trim` sur les champs texte
+      et convertit latitude/longitude en degrés décimaux. Matérialisé en vue.
     columns:
       - name: id
         data_type: string
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Identifiant unique de l'enregistrement de localisation.
 
       - name: id_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }}"
 
       - name: ville
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('ville') }}"
 
       - name: etat
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('etat') }}"
 
       - name: pays
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('pays') }}"
 
       - name: code_postal
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('code_postal') }}"
 
       - name: latitude
         data_type: float64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('latitude') }} Convertie depuis la source en divisant par 1 000 000."
 
       - name: longitude
         data_type: float64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('longitude') }} Convertie depuis la source en divisant par 1 000 000."
 
   - name: stg_populations
-    description: ""
+    description: >
+      Modèle de staging : normalise les données brutes de population par
+      code postal (`source.populations`). Nettoie la population de tout
+      caractère non numérique avant conversion en entier. Matérialisé en vue.
     columns:
       - name: code_postal
         data_type: int64
         data_tests:
           - not_null
           - unique
-        description: ""
+        description: Code postal (clé naturelle de ce modèle).
 
       - name: population
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('population') }}"
 
   - name: stg_services
-    description: ""
+    description: >
+      Modèle de staging : normalise les services souscrits par les clients
+      et leur facturation (`source.services`). Applique un `trim` sur les
+      champs texte et traduit en français les libellés de type de connexion
+      internet, de périodicité d'abonnement et de mode de paiement.
+      Matérialisé en vue.
     columns:
       - name: id
         data_type: string
         data_tests:
           - unique
           - not_null
-        description: ""
+        description: Identifiant unique de l'enregistrement de services.
 
       - name: id_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }}"
 
       - name: anciennete
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('anciennete') }}"
 
       - name: service_telephonique
         data_type: boolean
@@ -160,7 +175,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('service_telephonique') }}"
 
       - name: lignes_multiples
         data_type: boolean
@@ -170,7 +185,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('lignes_multiples') }}"
 
       - name: service_internet
         data_type: boolean
@@ -180,7 +195,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('service_internet') }}"
 
       - name: type_internet
         data_type: string
@@ -189,7 +204,7 @@ models:
           - accepted_values:
               arguments:
                 values: ['DSL', 'Câble', 'Fibre Optique', 'Non Renseigné']
-        description: ""
+        description: "{{ doc('type_internet') }}"
 
       - name: securite_en_ligne
         data_type: boolean
@@ -199,7 +214,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('securite_en_ligne') }}"
 
       - name: sauvegarde_en_ligne
         data_type: boolean
@@ -209,7 +224,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('sauvegarde_en_ligne') }}"
 
       - name: plan_protection_equipement
         data_type: boolean
@@ -219,7 +234,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('plan_protection_equipement') }}"
 
       - name: support_technique_premium
         data_type: boolean
@@ -229,7 +244,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('support_technique_premium') }}"
 
       - name: streaming_tv
         data_type: boolean
@@ -239,7 +254,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('streaming_tv') }}"
 
       - name: streaming_films
         data_type: boolean
@@ -249,7 +264,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('streaming_films') }}"
 
       - name: streaming_musique
         data_type: boolean
@@ -259,7 +274,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('streaming_musique') }}"
 
       - name: donnees_illimitee
         data_type: boolean
@@ -269,7 +284,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('donnees_illimitee') }}"
 
       - name: periodicite
         data_type: string
@@ -277,8 +292,8 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Mensuel', 'Annuel', 'Biennal']
-        description: ""
+                values: ['Mensuel', 'Annuel', 'Biennal', 'Non Renseigné']
+        description: "{{ doc('periodicite') }}"
 
       - name: facturation_digitale
         data_type: boolean
@@ -288,7 +303,7 @@ models:
               arguments:
                 values: [True, False]
                 quote: False
-        description: ""
+        description: "{{ doc('facturation_digitale') }}"
 
       - name: mode_paiement
         data_type: string
@@ -296,60 +311,64 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Carte de crédit', 'Chèque envoyé par courrier', 'Prélèvement bancaire']
-        description: ""
+                values: ['Carte de crédit', 'Chèque envoyé par courrier', 'Prélèvement bancaire', 'Non Renseigné']
+        description: "{{ doc('mode_paiement') }}"
 
       - name: montant_charge_mensuel
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_mensuel') }}"
 
       - name: montant_charge_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_total') }}"
 
       - name: montant_remboursements_total
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_remboursements_total') }}"
 
       - name: montant_charge_donnees_supplementaire
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('montant_charge_donnees_supplementaire') }}"
 
       - name: nombre_moyen_gb_telecharge_par_mois
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('nombre_moyen_gb_telecharge_par_mois') }}"
 
   - name: stg_status
-    description: ""
+    description: >
+      Modèle de staging : normalise le statut client et les motifs de
+      résiliation (`source.status`). Applique un `trim` sur les champs texte
+      et traduit en français les libellés de statut client et de catégorie
+      de churn. Matérialisé en vue.
     columns:
       - name: id
         data_type: string
         data_tests:
           - unique
           - not_null
-        description: ""
+        description: Identifiant unique de l'enregistrement de statut.
 
       - name: id_client
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('id_client') }}"
 
       - name: score_satisfaction
         data_type: int64
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('score_satisfaction') }}"
 
       - name: statut_client
         data_type: string
@@ -358,7 +377,7 @@ models:
           - accepted_values:
               arguments:
                 values: ['Rejoint', 'Resté', 'Résilié']
-        description: ""
+        description: "{{ doc('statut_client') }}"
 
       - name: categorie_churn
         data_type: string
@@ -367,10 +386,10 @@ models:
           - accepted_values:
               arguments:
                 values: ['Attitude', 'Concurrent', 'Insatisfaction', 'Prix', 'Non Renseigné']
-        description: ""
+        description: "{{ doc('categorie_churn') }}"
 
       - name: raison_churn
         data_type: string
         data_tests:
           - not_null
-        description: ""
+        description: "{{ doc('raison_churn') }}"
